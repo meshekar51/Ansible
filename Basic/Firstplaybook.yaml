@@ -1,5 +1,5 @@
 -name: ping module
- hosts: localhost
+ host: localhost
  become: true
  
  tasks:
