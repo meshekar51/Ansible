@@ -5,3 +5,5 @@
   tasks: 
    - debug:
        msg: "version is {{app_version}}"
+   - debug:
+       var: ansible_facts
