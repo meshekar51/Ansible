@@ -1,0 +1,18 @@
+- name: nginx service
+  hosts: all
+  become: true
+  tasks:
+    - name: nginx service check
+      service:
+        name: nginx
+        state: started
+    - name: nginx service install
+      dnf:
+        name: nginx
+        state: present
+    - name: nginx service status
+      command: systemctl status nginx
+      register: nginx_status
+    - name: show nginx status
+      debug:
+        var: nginx_status.stdout_lines
