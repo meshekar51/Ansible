@@ -1,18 +1,18 @@
+---
 - name: ping module
   hosts: localhost
   become: true
- 
-  tasks:
-  - name: ping
-    ping:
-    register: ping_output
-    
-  - name: Save output to file
-    copy:
-      content: "{{ ping_output.ping }}"
-      dest: /home/ec2-user/Ansible/Basic/ping.txt
 
-  - name: print message
-    debug:
-      msg: "Ping Successful"
-    
+  tasks:
+    - name: ping
+      ping:
+      register: ping_output
+
+    - name: Save output to file
+      copy:
+        content: "{{ ping_output.ping }}"
+        dest: /home/ec2-user/Ansible/Basic/ping.txt
+
+    - name: print message
+      debug:
+        msg: "Ping Successful"
