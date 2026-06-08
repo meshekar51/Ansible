@@ -7,3 +7,8 @@
        msg: "version is {{app_version}}"
    - debug:
        var: ansible_facts
+   - copy:
+       content: |
+        version is {{ app_version }}
+        {{ ansible_facts | to_nice_yaml }}
+       dest: /home/ec2-user/Ansible/Basic
