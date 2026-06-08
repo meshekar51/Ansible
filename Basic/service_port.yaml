@@ -1,0 +1,32 @@
+- name: Ensure nginx is installed and running
+  hosts: localhost
+  become: true
+  tasks:
+
+    - name: Install nginx (skips if already installed)
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
+
+    - name: Start and enable nginx (skips if already running)
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Wait for port 80 to be open
+      ansible.builtin.wait_for:
+        port: 80
+        host: localhost
+        timeout: 30
+
+    - name: Verify nginx responds with HTTP 200
+      ansible.builtin.uri:
+        url: http://localhost
+        status_code: 200
+        return_content: true
+      register: result
+
+    - name: Show verification result
+      ansible.builtin.debug:
+        msg: "nginx is UP — responded with {{ result.status }}"
