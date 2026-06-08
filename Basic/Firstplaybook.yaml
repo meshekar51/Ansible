@@ -5,6 +5,8 @@
   tasks:
   - name: ping
     ping:
+    register: ping_output
   - name: print message
     debug:
       msg: "Ping Successful"
+    
