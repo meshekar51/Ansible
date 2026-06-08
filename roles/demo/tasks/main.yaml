@@ -1,0 +1,3 @@
+- name: Demo Role
+  debug:
+    msg: "Hi, I am from Demo role tasks"
