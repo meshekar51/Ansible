@@ -4,15 +4,16 @@
   become: true
 
   tasks:
+
     - name: ping
       ping:
       register: ping_output
 
-    - name: Save output to file
+    - name: Save full output
       copy:
-        content: "{{ ping_output.ping }}"
-        dest: /home/ec2-user/Ansible/Basic/ping.txt
+        content: "{{ ping_output | to_nice_json }}"
+        dest: /home/ec2-user/Ansible/Basic/full_output.json
 
-    - name: print message
+    - name: print output
       debug:
-        msg: "Ping Successful"
+        var: ping_output
