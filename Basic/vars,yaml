@@ -1,5 +1,6 @@
 - name: test vars
   hosts: localhost
+  gather_facts: false
   vars:
     app_version: 2.0
   tasks: 
@@ -11,4 +12,4 @@
        content: |
         version is {{ app_version }}
         {{ ansible_facts | to_nice_yaml }}
-       dest: /home/ec2-user/Ansible/Basic
+       dest: /home/ec2-user/Ansible/Basic/test.yaml
