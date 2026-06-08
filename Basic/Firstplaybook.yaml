@@ -17,3 +17,8 @@
     - name: print output
       debug:
         var: ping_output
+    
+    - name: Save all facts
+      copy:
+        content: "{{ ansible_facts | to_nice_json }}"
+        dest: /home/ec2-user/Ansible/Basic/facts.json
