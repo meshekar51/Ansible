@@ -1,10 +1,10 @@
--name: ping module
- host: localhost
- become: true
+- name: ping module
+  hosts: localhost
+  become: true
  
- tasks:
- - name: ping
-   ping:
-   debug:
-     msg:
-      - "pong"
+  tasks:
+  - name: ping
+    ping:
+    debug:
+      msg:
+       - "pong"
