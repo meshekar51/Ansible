@@ -9,7 +9,7 @@
     
   - name: Save output to file
     copy:
-      content: "{{ ping_output.stdout }}"
+      content: "{{ ping_output.ping }}"
       dest: /home/ec2-user/Ansible/Basic/ping.txt
 
   - name: print message
