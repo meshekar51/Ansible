@@ -5,6 +5,6 @@
   tasks:
   - name: ping
     ping:
+  - name: print message
     debug:
-      msg:
-       - "pong"
+      msg: "Ping Successful"
