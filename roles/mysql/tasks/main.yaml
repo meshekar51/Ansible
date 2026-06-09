@@ -1,10 +1,10 @@
-- name: get the password from AWS secrets manager
-  debug:
-    msg: "{{ lookup('amazon.aws.aws_secret', 'roboshop/mysql_root_password', region='us-east-1') | from_json  }}"
+# - name: get the password from AWS secrets manager
+#   debug:
+#     msg: "{{ lookup('amazon.aws.aws_secret', 'roboshop/mysql_root_password', region='us-east-1') | from_json  }}"
 
-- name: print root password
-  debug:
-    msg: "{{ root_password.mysql_root_password }}"
+# - name: print root password
+#   debug:
+#     msg: "{{ root_password.mysql_root_password }}"
 - name: install mysql server
   package:
     name: mysql-server
@@ -15,4 +15,5 @@
     enabled: yes
     name: mysqld
 - name: setup root password
-  command: mysql_secure_installation --set-root-pass "{{ MYSQL_ROOT_PASSWORD }}"
+  #command: mysql_secure_installation --set-root-pass "{{ MYSQL_ROOT_PASSWORD }}"
+  command: mysql_secure_installation --set-root-pass "{{ root_password.mysql_root_password }}"
