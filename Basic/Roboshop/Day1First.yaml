@@ -1,0 +1,8 @@
+- name: nginx_status
+  become: true
+  hosts: local
+  tasks:
+    - name: nginx status
+      systemd_service: 
+         name: nginx
+         state: started
