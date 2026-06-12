@@ -1,0 +1,45 @@
+# Configure every RoboShop component in one run:
+#     ansible-playbook all.yaml
+#
+# One play per host group -> each role runs on its OWN server.
+# Order: data stores first, app services next, frontend last.
+# (common and demo are not services, so they are not listed here.)
+
+# ---- data stores ----
+- hosts: mongodb
+  become: yes
+  roles: [mongodb]
+
+- hosts: redis
+  become: yes
+  roles: [redis]
+
+- hosts: mysql
+  become: yes
+  roles: [mysql]
+
+- hosts: rabbitmq
+  become: yes
+  roles: [rabbitmq]
+
+# ---- application services ----
+- hosts: catalogue
+  become: yes
+  roles: [catalogue]
+
+- hosts: user
+  become: yes
+  roles: [user]
+
+- hosts: shipping
+  become: yes
+  roles: [shipping]
+
+- hosts: payment
+  become: yes
+  roles: [payment]
+
+# ---- public entry point (last) ----
+- hosts: frontend
+  become: yes
+  roles: [frontend]
