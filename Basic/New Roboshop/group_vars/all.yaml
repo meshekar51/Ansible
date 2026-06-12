@@ -1,0 +1,5 @@
+# Variables shared by every component.
+# A role's own defaults/ can override these per component.
+app_user: roboshop
+app_dir: /app
+domain: example.shop

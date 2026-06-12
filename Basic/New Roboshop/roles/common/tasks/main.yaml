@@ -1,0 +1,21 @@
+# Reusable steps shared by the Node.js app components.
+# Other roles pull these in with:  include_role: name: common
+- name: Enable Node.js (RHEL module stream)
+  ansible.builtin.command: dnf module enable nodejs:20 -y
+  changed_when: true
+  # NOTE: verify the stream (e.g. nodejs:20) for your OS version.
+
+- name: Install Node.js
+  ansible.builtin.dnf:
+    name: nodejs
+    state: present
+
+- name: Create the application user
+  ansible.builtin.user:
+    name: "{{ app_user }}"
+
+- name: Create the application directory
+  ansible.builtin.file:
+    path: "{{ app_dir }}"
+    state: directory
+    owner: "{{ app_user }}"

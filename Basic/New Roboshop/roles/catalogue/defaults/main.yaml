@@ -1,0 +1,2 @@
+# The download location is project-specific - point it at your app package.
+catalogue_app_url: "https://REPLACE-ME/catalogue.zip"

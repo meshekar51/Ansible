@@ -1,0 +1,2 @@
+# Easy-to-change settings for this role.
+mysql_root_password: "RoboShop@1"

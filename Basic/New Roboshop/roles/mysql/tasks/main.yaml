@@ -1,0 +1,19 @@
+# Installs MySQL and sets the root password.
+- name: Install MySQL server
+  ansible.builtin.dnf:
+    name: mysql-server
+    state: present
+
+- name: Start MySQL and keep it on after reboots
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: Set the root password (only takes effect on first run)
+  ansible.builtin.command: >
+    mysqladmin -u root password "{{ mysql_root_password }}"
+  register: setpw
+  failed_when: false
+  changed_when: false
+  # NOTE: once a password is set, re-runs are harmlessly ignored.

@@ -1,0 +1,10 @@
+# Run one component:
+#   ansible-playbook roboshop.yaml -e "component=mongodb"
+#
+# The single word you pass becomes BOTH the host group (hosts:)
+# and the role (roles:) - that is the whole trick.
+- name: configure "{{ component }}" server
+  hosts: "{{ component }}"
+  become: yes
+  roles:
+  - "{{ component }}"

@@ -1,0 +1,23 @@
+# Installs and configures MongoDB. The cleanest example role - read this first.
+- name: Add the MongoDB software source
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: Install MongoDB
+  ansible.builtin.dnf:
+    name: mongodb-org
+    state: present
+
+- name: Start MongoDB and keep it on after reboots
+  ansible.builtin.service:
+    name: mongod
+    state: started
+    enabled: yes
+
+- name: Allow other servers to connect (listen on all addresses)
+  ansible.builtin.replace:
+    path: /etc/mongod.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+  notify: Restart MongoDB

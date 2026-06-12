@@ -1,0 +1,4 @@
+# The smallest possible role: one task, no other folders needed.
+- name: Say hello
+  ansible.builtin.debug:
+    msg: "Hello from the demo role, running on {{ inventory_hostname }}"

@@ -1,0 +1,35 @@
+# Example application component (Node.js service).
+# Reuses the shared steps from the "common" role, then adds its own.
+- name: Run the shared common setup (Node.js, user, app dir)
+  ansible.builtin.include_role:
+    name: common
+
+- name: Download the application code
+  ansible.builtin.get_url:
+    url: "{{ catalogue_app_url }}"
+    dest: /tmp/catalogue.zip
+
+- name: Unpack the application into the app directory
+  ansible.builtin.unarchive:
+    src: /tmp/catalogue.zip
+    dest: "{{ app_dir }}"
+    remote_src: yes
+
+- name: Install the application's dependencies
+  ansible.builtin.command: npm install
+  args:
+    chdir: "{{ app_dir }}"
+  changed_when: true
+
+- name: Create the service definition from a template
+  ansible.builtin.template:
+    src: catalogue.service.j2
+    dest: /etc/systemd/system/catalogue.service
+  notify: Restart catalogue
+
+- name: Start the catalogue service and keep it on after reboots
+  ansible.builtin.systemd_service:
+    name: catalogue
+    state: started
+    enabled: yes
+    daemon_reload: yes

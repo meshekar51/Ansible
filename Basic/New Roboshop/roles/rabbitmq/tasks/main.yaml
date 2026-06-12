@@ -1,0 +1,25 @@
+# Installs RabbitMQ and creates an application user.
+# NOTE: repo setup for RabbitMQ + Erlang changes between versions.
+# Verify against: https://www.rabbitmq.com/docs/install-rpm
+- name: Install RabbitMQ
+  ansible.builtin.dnf:
+    name: rabbitmq-server
+    state: present
+
+- name: Start RabbitMQ and keep it on after reboots
+  ansible.builtin.service:
+    name: rabbitmq-server
+    state: started
+    enabled: yes
+
+- name: Create the application user
+  ansible.builtin.command: >
+    rabbitmqctl add_user {{ rabbitmq_user }} {{ rabbitmq_pass }}
+  register: adduser
+  failed_when: false
+  changed_when: "'already exists' not in adduser.stderr"
+
+- name: Give the user full permissions
+  ansible.builtin.command: >
+    rabbitmqctl set_permissions -p / {{ rabbitmq_user }} ".*" ".*" ".*"
+  changed_when: true
