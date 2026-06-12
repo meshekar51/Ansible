@@ -4,8 +4,9 @@
   vars:
     instances: ["mongodb", "redis", "mysql", "rabbitmq", "catalogue", "user", "cart", "shipping", "payment", "frontend"]
     image_id: ami-0220d79f3f480ecf5
-    domain_name: daws90s.shop # replace with your domain
+    domain_name: testzpaaws.bond # replace with your domain
     action: create
+    subnet_id: subnet-00cc1e5648d8fda5c
   tasks:
   - name: create ec2 instances
     amazon.aws.ec2_instance:
@@ -13,6 +14,7 @@
       name: "roboshop-{{ item }}"
       image_id: "{{ image_id }}"
       region: us-east-1
+      vpc_subnet_id: "{{ subnet_id }}"
       security_groups:
       - "roboshop-{{ item }}"
       - roboshop-common
@@ -45,7 +47,7 @@
     amazon.aws.route53:
       state: present
       zone: "{{ domain_name }}"
-      record: "{{ domain_name }}" #daws90s.shop
+      record: "{{ domain_name }}" #testzpaaws.bond
       type: A
       ttl: 1
       value: "{{ item.instances[0].public_ip_address }}"
@@ -59,7 +61,7 @@
     amazon.aws.route53:
       state: absent
       zone: "{{ domain_name }}"
-      record: "{{ item }}.{{ domain_name }}" # mongodb.daws90s.shop
+      record: "{{ item }}.{{ domain_name }}" # mongodb.testzpaaws.bond
       ttl: 1
       type: A
     loop: "{{ instances  }}"  
@@ -69,7 +71,7 @@
     amazon.aws.route53:
       state: absent
       zone: "{{ domain_name }}"
-      record: "{{ domain_name }}" # daws90s.shop
+      record: "{{ domain_name }}" # testzpaaws.bond
       ttl: 1
       type: A
     loop: "{{ instances  }}"  
