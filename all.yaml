@@ -22,7 +22,6 @@
   become: yes
   roles: [rabbitmq]
 
-# ---- application services ----
 - hosts: catalogue
   become: yes
   roles: [catalogue]
@@ -39,7 +38,6 @@
   become: yes
   roles: [payment]
 
-# ---- public entry point (last) ----
 - hosts: frontend
   become: yes
   roles: [frontend]
